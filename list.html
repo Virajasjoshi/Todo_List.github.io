@@ -1,0 +1,187 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logo.4.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <title>List</title>
+    <style>
+      body{
+    color: black;
+    background-color: white;
+    height: 100%;
+}
+
+.dark-mode{
+    background-color: black;
+    color: white;
+}
+.Btn1{
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    color: black;
+}
+
+.main{
+  height: 100%;
+}
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: aliceblue;
+  height: 50px;
+  padding: 5px;
+  color: black;
+  
+}
+.footer a{
+  color: black;
+  padding: 5px;
+  text-decoration: none;  
+}
+
+
+    </style>
+</head>
+<body>
+  <section>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+              
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled">Disabled</a>
+                  </li>
+                </ul>
+              </div>
+              <button class="Btn1" onclick="myFunction()">Change theme
+              </button>
+            </div>
+          </nav>
+    </header>
+    <main>
+        <div class="container mt-5 col-6"  >
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter Your List/Work" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button id = "add_btn" class="btn btn-outline-success" type="button" id="button-addon2">Add</button>
+          </div>
+        
+        <ul id="parentlist" class="list-group">
+            <li class="list-group-item d-flex justify-content-between ">
+                 <h3 class="flex-grow-1 ">  Your List </h3>
+                 <button class="btn btn-warning mx-3 " onclick="editList(this)">Edit</button>
+                 <button class="btn btn-danger" onclick="removeList(this)">Remove</button>
+             </li>
+        
+          </ul>
+        </div>
+      </section>
+        
+    </main>
+    <footer class="footer">
+      <a href="#">FAQ</a>
+      <a href="#">Terms of use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">&copy; 2022 | Virajas Joshi |  </a>
+      <a href="mailto:joshivirajas@gmail.com"  target="_blank"><i class="fa fa-envelope"></i></a></a>
+      <a href="https://www.instagram.com/invites/contact/?i=udad6qk8jbgu&utm_content=md2mz91"  target="_blank" ><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/virajas-joshi-359197211"  target="_blank" ><i class="fab fa-linkedin"></i></a>
+      <a href="tel:9359215709" target="_blank"><i class="fas fa-phone"></i></a>
+
+      
+  </footer>
+
+    
+   
+    <script>
+        let addBtn = document.getElementById('add_btn')
+        addBtn.addEventListener('click',addlist)
+        let parentlist = document.getElementById('parentlist');
+        function addlist(e){
+            if(parentlist.children[0].className == "emptyMsg"){
+                parentlist.children[0].remove()
+     
+            }
+            let currentBtn = e.currentTarget;
+            let currentInput = currentBtn.previousElementSibling
+            let youlist =  currentInput.value
+
+            let newLi = document.createElement('li')
+            //newLi.classList.add('list-group-item')
+            newLi.className = "list-group-item d-flex justify-content-between"
+            newLi.innerHTML = `<h3 class="flex-grow-1 "> ${youlist} </h3>
+                 <button class="btn btn-warning mx-3">Edit</button>
+                 <button class="btn btn-danger"  onclick="removeList(this)">Remove</button>`
+
+           
+            parentlist.appendChild(newLi)      
+        }
+
+        function removeList(currElment){
+
+            currElment.parentElement.remove()
+            let parentlist = document.getElementById('parentlist')
+            if(parentlist.children.length <= 0){
+                let newEmptyMsg = document.createElement("h3")
+                newEmptyMsg.classList.add("emptyMsg")
+                newEmptyMsg.textContent="Nothing is here. Please Add Your List!!!"
+                parentlist.appendChild(newEmptyMsg)
+            }
+
+        }
+        function editList(currElment){
+            if(currElment.textContent == "Done"){
+                currElment.textContent = "Edit"
+                let currlistName = currElment.previousElementSibling.value
+                let currHeading = document.createElement('h3');
+                currHeading.className= "flex-grow-1 "
+                currHeading.textContent = currlistName
+                currElment.parentElement.replaceChild(currHeading,currElment.previousElementSibling)
+                
+
+            }else{
+                currElment.textContent = "Done"
+            
+            let currlistName = currElment.previousElementSibling.textContent
+            let currInput = document.createElement('input');
+            currInput.type = "text"
+            currInput.placeholder = "Your List "
+            currInput.name = "form-control"
+            currInput.value = currlistName;
+            currElment.parentElement.replaceChild(currInput,currElment.previousElementSibling)
+        }
+
+            }
+
+
+
+       function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }     
+
+    </script>
+    
+</body>
+</html>
